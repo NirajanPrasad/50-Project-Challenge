@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Steps</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+        :root {
+            --blue-clr: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: max(10%, 300px);
+            min-width: 10vw;
+        }
+
+
+        .bar {
+            width: 100%;
+            position: relative;
+        }
+
+        .progress {
+            display: flex;
+            justify-content: space-between;
+
+            position: relative;
+
+            z-index: 999;
+        }
+
+        .progress-bar {
+            background: transparent;
+            border: 1px solid var(--blue-clr);
+
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            z-index: 1;
+
+            transition: all 0.5s ease;
+        }
+
+        .bar::before {
+            content: '';
+            position: absolute;
+
+            width: 98%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -999;
+
+            border: 1px solid #bbb;
+        }
+
+        li {
+            list-style: none;
+
+            border-radius: 100vw;
+            width: 30px;
+            text-align: center;
+            background: #fff;
+
+            border: 2px solid #999;
+
+            transition: all 0.3s 0.2s ease;
+        }
+
+        .buttons {
+            text-align: center;
+
+            margin-top: 1.2rem;
+        }
+
+        .container {
+            display: grid;
+
+        }
+
+        .btn {
+            width: 80px;
+            height: 30px;
+            color: #fff;
+
+            border: none;
+            outline: none;
+            border-radius: 100vw;
+            cursor: pointer;
+            background-color: #aaa;
+
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            margin-right: 1rem;
+        }
+
+        .active {
+            background-color: rgb(113, 219, 237);
+        }
+
+        .active-circle {
+
+            border: 2px solid var(--blue-clr);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="bar">
+            <ul class="progress">
+                <li class="active-circle">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+            <div class="progress-bar"></div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-prev">Prev</button>
+            <button class="btn btn-next ">Next</button>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    const btn = document.querySelectorAll('.btn');
+    const prev = document.querySelector('.btn-prev');
+    const next = document.querySelector('.btn-next');
+
+    const next_progress = document.querySelector('.progress-bar')
+
+    const circles = document.querySelectorAll('.progress li');
+
+    const click_button = function () {
+        btn.forEach((e) =>
+            e.classList.remove('active'));
+    };
+
+    let currentProgress = 0;
+
+
+    prev.addEventListener('click', function () {
+        click_button();
+        prev.classList.add('active');
+
+        // currentProgress < circles.length && currentProgress >= 1 ? currentProgress-- : currentProgress;
+
+        currentProgress < 1 ? currentProgress = 0 : currentProgress--;
+
+        // if (currentProgress < circles.length && currentProgress >= 1) {
+        //     currentProgress--;
+        // }
+
+        next_progress.style.width = ((currentProgress * 33) + '%');
+
+        updateCircle();
+    })
+
+    next.addEventListener('click', function () {
+        click_button();
+        next.classList.add('active');
+
+
+        currentProgress < circles.length - 1 ? currentProgress++ : currentProgress;
+        console.log(currentProgress);
+
+        next_progress.style.width = ((currentProgress * 33) + '%');
+
+        updateCircle();
+    })
+
+    console.log(circles);
+
+    const updateCircle = function () {
+        circles.forEach((circle, index) => {
+            if (index < (currentProgress + 1)) {
+                console.log(circle);
+                circle.classList.add('active-circle');
+            } else {
+                circle.classList.remove('active-circle');
+            }
+
+        })
+
+        if (currentProgress === 0) {
+            prev.disabled = true;
+            prev.classList.remove('active');
+            next.classList.add('active');
+        } else if (currentProgress === (circles.length - 1)) {
+            next.disabled = true;
+            next.classList.remove('active');
+            prev.classList.add('active');
+        } else {
+            prev.disabled = false;
+            next.disabled = false;
+        }
+    }
+
+
+</script>
+
+</html>
