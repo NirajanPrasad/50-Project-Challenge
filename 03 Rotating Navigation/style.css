@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  background: #111;
+}
+
+section {
+  min-height: 150vh;
+  background-color: #dadada;
+  position: relative;
+}
+
+.circle-nav {
+  height: 200px;
+  aspect-ratio: 1/1;
+  background: #ff7979;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50vw;
+}
+
+.icon_tab {
+  transition: transform 0.3s ease-in-out;
+}
+
+.circle-nav ul {
+  position: relative;
+  list-style: none;
+  height: 100%;
+
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  top: 65%;
+  left: 60%;
+}
+
+.close {
+  left: 25%;
+  top: 65%;
+}
+
+.active {
+  transform: rotate(-85deg);
+}
+
+.section {
+  transform-origin: top left;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav {
+  display: none;
+  position: absolute;
+  bottom: 15%;
+  left: 5%;
+}
+
+.nav-item {
+  display: flex;
+  color: white;
+  gap: 1rem;
+
+  animation: inAnimation 1s;
+}
+
+@keyframes inAnimation {
+  from {
+    transform: translateX(-300%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.nav-item:nth-child(2) {
+  margin-left: 0.5rem;
+}
+.nav-item:nth-child(3) {
+  margin-left: 1rem;
+}
+
+.nav-item a {
+  color: #fff;
+}
+
+.primary-nav {
+  display: grid;
+  gap: 1rem;
+}
